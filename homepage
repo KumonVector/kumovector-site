@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kumo Vector</title>
+  <style>
+    :root {
+      --bg: #030712;
+      --bg2: #07111f;
+      --white: #f7fbff;
+      --muted: rgba(232, 241, 255, 0.68);
+      --soft: rgba(232, 241, 255, 0.42);
+      --line: rgba(185, 217, 255, 0.16);
+      --blue: #6db7ff;
+      --violet: #9b7cff;
+      --cyan: #b8f3ff;
+      --glass: rgba(255, 255, 255, 0.055);
+      --glass2: rgba(255, 255, 255, 0.085);
+      --shadow: rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #field {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(92, 151, 255, 0.24), transparent 28%),
+        radial-gradient(circle at 82% 35%, rgba(156, 124, 255, 0.18), transparent 26%),
+        radial-gradient(circle at 48% 78%, rgba(116, 247, 255, 0.11), transparent 30%),
+        linear-gradient(135deg, #02050d, #08101d 45%, #030712);
+    }
+
+    .cinema {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .veil {
+      position: absolute;
+      inset: -20%;
+      background:
+        linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.035), transparent 36%),
+        radial-gradient(circle at 50% 50%, transparent 0, rgba(0,0,0,0.68) 74%);
+      mix-blend-mode: screen;
+      transform: translate3d(0,0,0);
+    }
+
+    .grid {
+      position: absolute;
+      inset: -30%;
+      background-image:
+        linear-gradient(rgba(186, 221, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(186, 221, 255, 0.08) 1px, transparent 1px);
+      background-size: 82px 82px;
+      transform: perspective(900px) rotateX(62deg) translateY(15%);
+      transform-origin: center;
+      opacity: 0.34;
+      filter: blur(0.2px);
+    }
+
+    .cloud {
+      position: absolute;
+      width: 58vw;
+      height: 58vw;
+      min-width: 520px;
+      min-height: 520px;
+      border-radius: 999px;
+      filter: blur(54px);
+      opacity: 0.22;
+      background: radial-gradient(circle, rgba(107,183,255,0.72), transparent 62%);
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+
+    .cloud.one { left: -18vw; top: 8vh; }
+    .cloud.two {
+      right: -20vw;
+      bottom: -16vh;
+      background: radial-gradient(circle, rgba(156,124,255,0.58), transparent 64%);
+      animation-duration: 22s;
+    }
+
+    .orb {
+      position: absolute;
+      border: 1px solid rgba(207,230,255,0.22);
+      border-radius: 999px;
+      box-shadow: 0 0 80px rgba(109,183,255,0.08);
+      opacity: 0.72;
+    }
+
+    .orb.a {
+      width: 360px;
+      height: 360px;
+      right: 8vw;
+      top: 14vh;
+    }
+
+    .orb.b {
+      width: 180px;
+      height: 180px;
+      left: 9vw;
+      bottom: 18vh;
+      border-color: rgba(184,243,255,0.18);
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(-3%, -2%, 0) scale(1); }
+      to { transform: translate3d(5%, 4%, 0) scale(1.14); }
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      padding: 28px clamp(22px, 5vw, 72px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(3,7,18,0.72), transparent);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      letter-spacing: -0.03em;
+      font-weight: 650;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.86), rgba(109,183,255,0.38)),
+        radial-gradient(circle at 70% 35%, rgba(156,124,255,0.9), transparent 34%);
+      box-shadow: 0 0 35px rgba(109,183,255,0.28);
+      position: relative;
+    }
+
+    .mark:after {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border-top: 1px solid rgba(2,7,18,0.55);
+      border-right: 1px solid rgba(2,7,18,0.55);
+      transform: rotate(45deg);
+    }
+
+    nav {
+      display: flex;
+      gap: 26px;
+      font-size: 13px;
+      color: var(--soft);
+    }
+
+    nav a {
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--white);
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      scroll-snap-type: y mandatory;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
+    section {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      padding: 120px clamp(22px, 7vw, 110px) 72px;
+      position: relative;
+    }
+
+    .scene {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(184,243,255,0.72);
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: clamp(56px, 9vw, 124px);
+      line-height: 0.88;
+      letter-spacing: -0.075em;
+      max-width: 1060px;
+      font-weight: 720;
+    }
+
+    h2 {
+      font-size: clamp(42px, 6vw, 88px);
+      line-height: 0.92;
+      letter-spacing: -0.065em;
+      max-width: 920px;
+      font-weight: 700;
+    }
+
+    .lead {
+      max-width: 740px;
+      margin-top: 34px;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.45;
+      color: var(--muted);
+      letter-spacing: -0.02em;
+    }
+
+    .actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 42px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 24px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      color: #030712;
+      font-weight: 650;
+      font-size: 14px;
+      box-shadow: 0 18px 55px rgba(109,183,255,0.18);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 80px rgba(109,183,255,0.26);
+    }
+
+    .quiet {
+      color: var(--soft);
+      font-size: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-panel {
+      position: absolute;
+      right: 0;
+      bottom: -34px;
+      width: min(420px, 42vw);
+      height: 260px;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025));
+      backdrop-filter: blur(24px);
+      box-shadow: 0 35px 120px var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-panel:before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background:
+        linear-gradient(110deg, transparent, rgba(184,243,255,0.16), transparent),
+        repeating-linear-gradient(90deg, transparent 0 24px, rgba(255,255,255,0.055) 24px 25px);
+      animation: scan 8s linear infinite;
+    }
+
+    .hero-panel:after {
+      content: "VECTOR SYSTEMS";
+      position: absolute;
+      left: 24px;
+      bottom: 22px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.48);
+    }
+
+    @keyframes scan {
+      from { transform: translateX(-45%); }
+      to { transform: translateX(45%); }
+    }
+
+    .services-wrap {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: clamp(34px, 6vw, 90px);
+      align-items: center;
+    }
+
+    .services {
+      display: grid;
+      gap: 14px;
+    }
+
+    .service {
+      position: relative;
+      padding: 26px 26px 26px 28px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.075), rgba(255,255,255,0.028));
+      border: 1px solid rgba(224,238,255,0.13);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    .service:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(109,183,255,0.16), transparent 34%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .service:hover:before {
+      opacity: 1;
+    }
+
+    .service h3 {
+      position: relative;
+      font-size: 22px;
+      letter-spacing: -0.035em;
+      margin-bottom: 12px;
+    }
+
+    .service p {
+      position: relative;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    .number {
+      position: absolute;
+      right: 22px;
+      top: 20px;
+      color: rgba(255,255,255,0.22);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+    }
+
+    .name-block {
+      max-width: 780px;
+    }
+
+    .statement {
+      margin-top: 38px;
+      max-width: 760px;
+      font-size: clamp(24px, 3vw, 42px);
+      line-height: 1.13;
+      letter-spacing: -0.045em;
+      color: rgba(247,251,255,0.92);
+    }
+
+    .statement span {
+      color: rgba(184,243,255,0.84);
+    }
+
+    .contact-card {
+      width: min(760px, 100%);
+      border: 1px solid rgba(224,238,255,0.15);
+      border-radius: 38px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
+      backdrop-filter: blur(28px);
+      padding: clamp(30px, 5vw, 58px);
+      box-shadow: 0 42px 130px rgba(0,0,0,0.46);
+    }
+
+    .email {
+      display: inline-flex;
+      margin-top: 26px;
+      color: rgba(247,251,255,0.78);
+      font-size: clamp(18px, 2vw, 24px);
+      letter-spacing: -0.025em;
+    }
+
+    .scene-word {
+      position: absolute;
+      right: clamp(20px, 7vw, 120px);
+      top: 28%;
+      font-size: clamp(70px, 16vw, 220px);
+      letter-spacing: -0.09em;
+      font-weight: 760;
+      color: rgba(255,255,255,0.035);
+      pointer-events: none;
+      line-height: 0.8;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px) scale(0.985);
+      transition: opacity 1s ease, transform 1s cubic-bezier(.16,1,.3,1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .progress {
+      position: fixed;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 12;
+      display: grid;
+      gap: 12px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.28);
+      transition: height 0.35s ease, background 0.35s ease;
+    }
+
+    .dot.active {
+      height: 28px;
+      background: rgba(184,243,255,0.86);
+    }
+
+    @media (max-width: 860px) {
+      header {
+        padding: 22px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      section {
+        padding: 110px 22px 56px;
+      }
+
+      .services-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel {
+        position: relative;
+        width: 100%;
+        height: 170px;
+        margin-top: 44px;
+        bottom: auto;
+      }
+
+      .progress {
+        display: none;
+      }
+
+      h1 {
+        font-size: clamp(54px, 16vw, 86px);
+      }
+
+      h2 {
+        font-size: clamp(42px, 13vw, 68px);
+      }
+
+      .scene-word {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+
+      main {
+        scroll-snap-type: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="field"></canvas>
+
+  <div class="cinema" aria-hidden="true">
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
+    <div class="grid"></div>
+    <div class="veil"></div>
+    <div class="orb a"></div>
+    <div class="orb b"></div>
+  </div>
+
+  <header>
+    <a class="brand" href="#hero" aria-label="Kumo Vector home">
+      <span class="mark"></span>
+      <span>Kumo Vector</span>
+    </a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#why">Why Kumo</a>
+      <a href="mailto:nicolas@kumovector.com">Contact</a>
+    </nav>
+  </header>
+
+  <div class="progress" aria-hidden="true">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+
+  <main id="scroll">
+    <section id="hero">
+      <div class="scene">
+        <div class="eyebrow reveal active">Enterprise technology direction</div>
+        <h1 class="reveal active">AI-driven engineering for enterprise systems.</h1>
+        <p class="lead reveal active">
+          Kumo Vector helps companies design, build, and scale product engineering, AI enablement, data intelligence, and strategic delivery capabilities.
+        </p>
+        <div class="actions reveal active">
+          <a class="button" href="mailto:nicolas@kumovector.com">Book a Discovery Call</a>
+          <span class="quiet">Enterprise software. Applied AI. Data systems. Delivery execution.</span>
+        </div>
+        <div class="hero-panel reveal active"></div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="scene services-wrap">
+        <div>
+          <div class="eyebrow reveal">Capabilities</div>
+          <h2 class="reveal">Built for complex systems, not surface-level transformation.</h2>
+          <p class="lead reveal">
+            Strategy, architecture, delivery, and execution aligned into one operating rhythm.
+          </p>
+        </div>
+
+        <div class="services">
+          <article class="service reveal">
+            <span class="number">01</span>
+            <h3>Product Engineering</h3>
+            <p>Software development, platforms, cloud systems, product delivery, architecture, and scalable engineering.</p>
+          </article>
+
+          <article class="service reveal">
+            <span class="number">02</span>
+            <h3>AI Enablement</h3>
+            <p>Applied AI, LLM workflows, automation, AI-assisted operations, and intelligent internal tools that fit real business processes.</p>
+          </article>
+
+          <article class="service reveal">
+            <span class="number">03</span>
+            <h3>Data Intelligence</h3>
+            <p>Data platforms, analytics, decision systems, reporting automation, pipelines, and operational intelligence.</p>
+          </article>
+
+          <article class="service reveal">
+            <span class="number">04</span>
+            <h3>Strategic Delivery</h3>
+            <p>Discovery, delivery leadership, roadmap execution, agile execution, stakeholder alignment, and shipped outcomes.</p>
+          </article>
+        </div>
+      </div>
+      <div class="scene-word">SYSTEMS</div>
+    </section>
+
+    <section id="why">
+      <div class="scene name-block">
+        <div class="eyebrow reveal">Why Kumo Vector</div>
+        <h2 class="reveal">Cloud, direction, movement, precision.</h2>
+        <p class="statement reveal">
+          <span>Kumo</span> means cloud. <span>Vector</span> means direction. We help companies move through complexity with intelligence, speed, and control.
+        </p>
+      </div>
+      <div class="scene-word">VECTOR</div>
+    </section>
+
+    <section id="contact">
+      <div class="scene">
+        <div class="contact-card reveal">
+          <div class="eyebrow">Contact</div>
+          <h2>Let’s build what moves next.</h2>
+          <a class="email" href="mailto:nicolas@kumovector.com">nicolas@kumovector.com</a>
+          <div class="actions">
+            <a class="button" href="mailto:nicolas@kumovector.com">Book a Discovery Call</a>
+            <span class="quiet">Kumo Vector</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-word">KUMO</div>
+    </section>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("field");
+    const ctx = canvas.getContext("2d");
+    const scroller = document.getElementById("scroll");
+    const dots = Array.from(document.querySelectorAll(".dot"));
+    const sections = Array.from(document.querySelectorAll("section"));
+    const reveals = Array.from(document.querySelectorAll(".reveal"));
+    const grid = document.querySelector(".grid");
+    const veil = document.querySelector(".veil");
+    const orbs = Array.from(document.querySelectorAll(".orb"));
+    const services = Array.from(document.querySelectorAll(".service"));
+
+    let w = 0;
+    let h = 0;
+    let dpr = 1;
+    let points = [];
+    let targetScroll = 0;
+    let currentScroll = 0;
+    let mouse = { x: 0.5, y: 0.5 };
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      canvas.style.width = w + "px";
+      canvas.style.height = h + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const count = Math.floor(Math.min(110, Math.max(58, w / 18)));
+      points = Array.from({ length: count }, (_, i) => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        z: Math.random() * 1 + 0.25,
+        vx: (Math.random() - 0.5) * 0.16,
+        vy: (Math.random() - 0.5) * 0.16,
+        r: Math.random() * 1.3 + 0.4,
+        i
+      }));
+    }
+
+    function draw() {
+      targetScroll = scroller.scrollTop / Math.max(1, scroller.scrollHeight - h);
+      currentScroll += (targetScroll - currentScroll) * 0.07;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const driftX = (mouse.x - 0.5) * 34;
+      const driftY = (mouse.y - 0.5) * 34;
+      const scrollForce = currentScroll * h * 0.38;
+
+      const grad = ctx.createRadialGradient(
+        w * (0.45 + currentScroll * 0.22), h * 0.35, 0,
+        w * 0.5, h * 0.5, Math.max(w, h) * 0.8
+      );
+      grad.addColorStop(0, "rgba(109,183,255,0.12)");
+      grad.addColorStop(0.35, "rgba(156,124,255,0.055)");
+      grad.addColorStop(1, "rgba(3,7,18,0)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      for (const p of points) {
+        p.x += p.vx * p.z + Math.sin(Date.now() * 0.00018 + p.i) * 0.018;
+        p.y += p.vy * p.z + Math.cos(Date.now() * 0.00015 + p.i) * 0.018;
+
+        if (p.x < -60) p.x = w + 60;
+        if (p.x > w + 60) p.x = -60;
+        if (p.y < -60) p.y = h + 60;
+        if (p.y > h + 60) p.y = -60;
+      }
+
+      for (let i = 0; i < points.length; i++) {
+        const a = points[i];
+        const ax = a.x + driftX * a.z;
+        const ay = a.y + driftY * a.z - scrollForce * (a.z - 0.45);
+
+        for (let j = i + 1; j < points.length; j++) {
+          const b = points[j];
+          const bx = b.x + driftX * b.z;
+          const by = b.y + driftY * b.z - scrollForce * (b.z - 0.45);
+          const dx = ax - bx;
+          const dy = ay - by;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 138) {
+            const alpha = (1 - dist / 138) * 0.145;
+            ctx.strokeStyle = "rgba(190,225,255," + alpha + ")";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(ax, ay);
+            ctx.lineTo(bx, by);
+            ctx.stroke();
+          }
+        }
+      }
+
+      for (const p of points) {
+        const x = p.x + driftX * p.z;
+        const y = p.y + driftY * p.z - scrollForce * (p.z - 0.45);
+        ctx.fillStyle = "rgba(220,242,255," + (0.24 + p.z * 0.14) + ")";
+        ctx.beginPath();
+        ctx.arc(x, y, p.r * p.z, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    function updateScene() {
+      const progress = scroller.scrollTop / Math.max(1, scroller.scrollHeight - h);
+      grid.style.transform =
+        "perspective(900px) rotateX(" + (62 - progress * 9) + "deg) translateY(" + (15 - progress * 18) + "%) translateX(" + ((mouse.x - 0.5) * -18) + "px)";
+      veil.style.transform =
+        "translate3d(" + ((mouse.x - 0.5) * 26) + "px," + ((mouse.y - 0.5) * 20) + "px,0) scale(" + (1 + progress * 0.05) + ")";
+
+      orbs.forEach((orb, i) => {
+        const speed = i === 0 ? 52 : -36;
+        orb.style.transform =
+          "translate3d(" + ((mouse.x - 0.5) * speed) + "px," + ((mouse.y - 0.5) * speed * 0.6 + progress * speed) + "px,0)";
+      });
+
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < h * 0.5 && rect.bottom > h * 0.5) {
+          dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
+        }
+      });
+
+      reveals.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < h * 0.82) el.classList.add("active");
+      });
+    }
+
+    services.forEach((card) => {
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty("--x", ((e.clientX - r.left) / r.width) * 100 + "%");
+        card.style.setProperty("--y", ((e.clientY - r.top) / r.height) * 100 + "%");
+      });
+    });
+
+    window.addEventListener("resize", resize);
+    window.addEventListener("pointermove", (e) => {
+      mouse.x = e.clientX / Math.max(1, w);
+      mouse.y = e.clientY / Math.max(1, h);
+    });
+
+    scroller.addEventListener("scroll", updateScene, { passive: true });
+
+    resize();
+    draw();
+    updateScene();
+  </script>
+</body>
+</html>
