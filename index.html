@@ -8,16 +8,12 @@
   <style>
     :root {
       --bg: #030712;
-      --bg2: #07111f;
       --white: #f7fbff;
       --muted: rgba(232, 241, 255, 0.68);
       --soft: rgba(232, 241, 255, 0.42);
-      --line: rgba(185, 217, 255, 0.16);
       --blue: #6db7ff;
       --violet: #9b7cff;
       --cyan: #b8f3ff;
-      --glass: rgba(255, 255, 255, 0.055);
-      --shadow: rgba(0, 0, 0, 0.55);
     }
 
     * {
@@ -71,7 +67,6 @@
         linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.035), transparent 36%),
         radial-gradient(circle at 50% 50%, transparent 0, rgba(0,0,0,0.68) 74%);
       mix-blend-mode: screen;
-      transform: translate3d(0,0,0);
     }
 
     .grid {
@@ -298,8 +293,8 @@
       position: absolute;
       right: 0;
       bottom: -44px;
-      width: min(470px, 42vw);
-      height: 310px;
+      width: min(500px, 43vw);
+      height: 330px;
       border: 1px solid rgba(224,238,255,0.15);
       border-radius: 34px;
       background:
@@ -311,7 +306,7 @@
       box-shadow: 0 35px 120px rgba(0,0,0,0.58);
       overflow: hidden;
     }
-    
+
     .hero-visual:before {
       content: "";
       position: absolute;
@@ -330,7 +325,7 @@
       animation: rotateField 14s linear infinite;
       opacity: 0.95;
     }
-    
+
     .hero-visual:after {
       content: "";
       position: absolute;
@@ -342,148 +337,50 @@
       mask-image: radial-gradient(circle at center, black, transparent 76%);
       opacity: 0.5;
     }
-    
-    .visual-core {
+
+    #morphObject {
       position: absolute;
-      z-index: 4;
-      left: 50%;
-      top: 50%;
-      width: 82px;
-      height: 82px;
-      transform: translate(-50%, -50%);
-      border-radius: 28px;
-      background:
-        radial-gradient(circle at 35% 25%, rgba(255,255,255,0.95), rgba(184,243,255,0.55) 28%, transparent 54%),
-        linear-gradient(135deg, rgba(109,183,255,0.7), rgba(156,124,255,0.34));
-      box-shadow:
-        0 0 42px rgba(184,243,255,0.5),
-        0 0 110px rgba(109,183,255,0.28);
-      animation: coreFloat 4.8s ease-in-out infinite;
+      inset: 0;
+      z-index: 6;
+      width: 100%;
+      height: 100%;
     }
-    
-    .visual-core:after {
-      content: "";
-      position: absolute;
-      inset: 22px;
-      border-top: 1px solid rgba(3,7,18,0.62);
-      border-right: 1px solid rgba(3,7,18,0.62);
-      transform: rotate(45deg);
-    }
-    
-    .orbit {
-      position: absolute;
-      z-index: 3;
-      left: 50%;
-      top: 50%;
-      border: 1px solid rgba(184,243,255,0.22);
-      border-radius: 999px;
-      transform-style: preserve-3d;
-    }
-    
-    .orbit:before {
-      content: "";
-      position: absolute;
-      width: 9px;
-      height: 9px;
-      border-radius: 999px;
-      background: rgba(247,251,255,0.95);
-      box-shadow: 0 0 24px rgba(184,243,255,0.9);
-    }
-    
-    .orbit-one {
-      width: 250px;
-      height: 96px;
-      margin-left: -125px;
-      margin-top: -48px;
-      animation: orbitSpinOne 7s linear infinite;
-    }
-    
-    .orbit-one:before {
-      left: 28px;
-      top: 16px;
-    }
-    
-    .orbit-two {
-      width: 300px;
-      height: 126px;
-      margin-left: -150px;
-      margin-top: -63px;
-      border-color: rgba(156,124,255,0.22);
-      animation: orbitSpinTwo 10s linear infinite reverse;
-    }
-    
-    .orbit-two:before {
-      right: 38px;
-      bottom: 20px;
-      background: rgba(156,124,255,0.95);
-    }
-    
-    .orbit-three {
-      width: 190px;
-      height: 250px;
-      margin-left: -95px;
-      margin-top: -125px;
-      border-color: rgba(109,183,255,0.18);
-      animation: orbitSpinThree 12s linear infinite;
-    }
-    
-    .orbit-three:before {
-      left: 50%;
-      top: 10px;
-    }
-    
+
     .data-ribbon {
       position: absolute;
       z-index: 2;
       height: 2px;
-      width: 220px;
+      width: 240px;
       background: linear-gradient(90deg, transparent, rgba(184,243,255,0.85), transparent);
       filter: drop-shadow(0 0 12px rgba(184,243,255,0.55));
       opacity: 0.72;
     }
-    
+
     .ribbon-one {
       left: -60px;
       top: 92px;
       transform: rotate(18deg);
       animation: ribbonMoveOne 5.6s ease-in-out infinite;
     }
-    
+
     .ribbon-two {
       right: -70px;
-      top: 185px;
+      top: 190px;
       transform: rotate(-16deg);
       animation: ribbonMoveTwo 6.4s ease-in-out infinite;
     }
-    
+
     .ribbon-three {
       left: 80px;
       bottom: 52px;
       width: 300px;
-      transform: rotate(0deg);
       background: linear-gradient(90deg, transparent, rgba(156,124,255,0.72), transparent);
       animation: ribbonMoveThree 7.2s ease-in-out infinite;
     }
-    
-    .glow-dot {
-      position: absolute;
-      z-index: 5;
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: rgba(184,243,255,0.95);
-      box-shadow: 0 0 18px rgba(184,243,255,0.85);
-      animation: dotTravel 5.5s ease-in-out infinite;
-    }
-    
-    .d1 { left: 16%; top: 28%; animation-delay: 0s; }
-    .d2 { right: 18%; top: 34%; animation-delay: 1s; background: rgba(156,124,255,0.95); }
-    .d3 { left: 28%; bottom: 20%; animation-delay: 1.8s; }
-    .d4 { right: 28%; bottom: 24%; animation-delay: 2.7s; background: rgba(247,251,255,0.95); }
-    
+
     .scan-layer {
       position: absolute;
-      z-index: 6;
+      z-index: 8;
       inset: 0;
       background: linear-gradient(
         120deg,
@@ -497,10 +394,10 @@
       transform: translateX(-120%);
       animation: premiumScan 5.8s ease-in-out infinite;
     }
-    
+
     .signal {
       position: absolute;
-      z-index: 7;
+      z-index: 9;
       right: 24px;
       top: 22px;
       display: flex;
@@ -510,7 +407,7 @@
       font-size: 11px;
       letter-spacing: 0.14em;
     }
-    
+
     .signal span {
       width: 7px;
       height: 7px;
@@ -519,103 +416,46 @@
       box-shadow: 0 0 18px rgba(184,243,255,0.7);
       animation: liveBlink 1.6s ease-in-out infinite;
     }
-    
+
     .visual-label {
       position: absolute;
-      z-index: 7;
+      z-index: 9;
       left: 24px;
       bottom: 22px;
       font-size: 11px;
       letter-spacing: 0.18em;
       color: rgba(255,255,255,0.52);
     }
-    
+
     @keyframes rotateField {
       from { transform: rotate(0deg) scale(1.05); }
       to { transform: rotate(360deg) scale(1.05); }
     }
-    
-    @keyframes coreFloat {
-      0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-      50% { transform: translate(-50%, -54%) scale(1.08) rotate(8deg); }
-    }
-    
-    @keyframes orbitSpinOne {
-      from { transform: rotate(0deg) rotateX(64deg) rotateZ(8deg); }
-      to { transform: rotate(360deg) rotateX(64deg) rotateZ(8deg); }
-    }
-    
-    @keyframes orbitSpinTwo {
-      from { transform: rotate(0deg) rotateX(58deg) rotateZ(-24deg); }
-      to { transform: rotate(360deg) rotateX(58deg) rotateZ(-24deg); }
-    }
-    
-    @keyframes orbitSpinThree {
-      from { transform: rotate(0deg) rotateY(62deg) rotateZ(28deg); }
-      to { transform: rotate(360deg) rotateY(62deg) rotateZ(28deg); }
-    }
-    
+
     @keyframes ribbonMoveOne {
       0%, 100% { transform: translateX(-20px) rotate(18deg); opacity: 0.36; }
       50% { transform: translateX(90px) rotate(18deg); opacity: 0.9; }
     }
-    
+
     @keyframes ribbonMoveTwo {
       0%, 100% { transform: translateX(30px) rotate(-16deg); opacity: 0.32; }
       50% { transform: translateX(-95px) rotate(-16deg); opacity: 0.88; }
     }
-    
+
     @keyframes ribbonMoveThree {
-      0%, 100% { transform: translateY(10px) rotate(0deg); opacity: 0.28; }
-      50% { transform: translateY(-18px) rotate(0deg); opacity: 0.8; }
+      0%, 100% { transform: translateY(10px); opacity: 0.28; }
+      50% { transform: translateY(-18px); opacity: 0.8; }
     }
-    
-    @keyframes dotTravel {
-      0%, 100% { transform: translate3d(0,0,0) scale(0.8); opacity: 0.35; }
-      45% { transform: translate3d(38px,-24px,0) scale(1.25); opacity: 1; }
-      70% { transform: translate3d(-18px,28px,0) scale(1); opacity: 0.7; }
-    }
-    
+
     @keyframes premiumScan {
       0%, 70% { transform: translateX(-120%); opacity: 0; }
       78% { opacity: 1; }
       100% { transform: translateX(120%); opacity: 0; }
     }
-    
+
     @keyframes liveBlink {
       0%, 100% { opacity: 0.45; transform: scale(0.8); }
       50% { opacity: 1; transform: scale(1.15); }
-    }
-    
-    .visual-label {
-      position: absolute;
-      z-index: 3;
-      left: 24px;
-      bottom: 22px;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      color: rgba(255,255,255,0.52);
-    }
-
-    .signal {
-      position: absolute;
-      z-index: 3;
-      right: 24px;
-      top: 22px;
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      color: rgba(184,243,255,0.78);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-    }
-
-    .signal span {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: rgba(184,243,255,0.86);
-      box-shadow: 0 0 18px rgba(184,243,255,0.7);
     }
 
     .services-wrap {
@@ -813,7 +653,7 @@
       .hero-visual {
         position: relative;
         width: 100%;
-        height: 230px;
+        height: 270px;
         margin-top: 44px;
         bottom: auto;
       }
@@ -902,25 +742,15 @@
         </div>
 
         <div class="hero-visual reveal active" aria-hidden="true">
-          <div class="visual-core"></div>
-          <div class="orbit orbit-one"></div>
-          <div class="orbit orbit-two"></div>
-          <div class="orbit orbit-three"></div>
-        
           <div class="data-ribbon ribbon-one"></div>
           <div class="data-ribbon ribbon-two"></div>
           <div class="data-ribbon ribbon-three"></div>
-        
-          <div class="glow-dot d1"></div>
-          <div class="glow-dot d2"></div>
-          <div class="glow-dot d3"></div>
-          <div class="glow-dot d4"></div>
-        
+
+          <canvas id="morphObject"></canvas>
+
           <div class="scan-layer"></div>
-          <div class="signal"><span></span>LIVE SYSTEM</div>
-          <div class="visual-label">AI DELIVERY OPERATING MAP</div>
-        </div>
-          <div class="visual-label">VECTOR OPERATING MAP</div>
+          <div class="signal"><span></span><span id="shapeName">AI CORE</span></div>
+          <div class="visual-label">MORPHING VECTOR INTELLIGENCE</div>
         </div>
       </div>
     </section>
@@ -1078,7 +908,7 @@
       }));
     }
 
-    function draw() {
+    function drawBackground() {
       targetScroll = scroller.scrollTop / Math.max(1, scroller.scrollHeight - h);
       currentScroll += (targetScroll - currentScroll) * 0.07;
 
@@ -1129,7 +959,6 @@
 
           if (dist < 138) {
             const alpha = (1 - dist / 138) * 0.145;
-
             ctx.strokeStyle = "rgba(190,225,255," + alpha + ")";
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -1150,7 +979,7 @@
         ctx.fill();
       }
 
-      requestAnimationFrame(draw);
+      requestAnimationFrame(drawBackground);
     }
 
     function updateScene() {
@@ -1205,8 +1034,343 @@
     scroller.addEventListener("scroll", updateScene, { passive: true });
 
     resize();
-    draw();
+    drawBackground();
     updateScene();
+
+    const morphCanvas = document.getElementById("morphObject");
+    const morphCtx = morphCanvas.getContext("2d");
+    const shapeName = document.getElementById("shapeName");
+
+    let mw = 0;
+    let mh = 0;
+    let mdpr = 1;
+    let morphParticles = [];
+    let shapeIndex = 0;
+    let nextShapeIndex = 1;
+    let morphStart = performance.now();
+    let rotation = 0;
+
+    const SHAPE_TIME = 2200;
+    const MORPH_TIME = 900;
+    const PARTICLE_COUNT = 620;
+    const LINK_DISTANCE = 28;
+
+    const shapeLabels = [
+      "AI CORE",
+      "ROCKET",
+      "ROBOT BUST",
+      "CLOUD NODE",
+      "NEURAL CHIP",
+      "DATA ORBIT"
+    ];
+
+    function resizeMorph() {
+      const rect = morphCanvas.getBoundingClientRect();
+      mdpr = Math.min(window.devicePixelRatio || 1, 2);
+      mw = rect.width;
+      mh = rect.height;
+      morphCanvas.width = Math.floor(mw * mdpr);
+      morphCanvas.height = Math.floor(mh * mdpr);
+      morphCtx.setTransform(mdpr, 0, 0, mdpr, 0, 0);
+      initMorphParticles();
+    }
+
+    function rand(seed) {
+      const x = Math.sin(seed * 999.91) * 43758.5453;
+      return x - Math.floor(x);
+    }
+
+    function sampleSphere(i) {
+      const a = rand(i + 1) * Math.PI * 2;
+      const v = rand(i + 9) * 2 - 1;
+      const r = Math.sqrt(1 - v * v);
+      const radius = 78 + Math.sin(i * 0.41) * 9;
+      return {
+        x: Math.cos(a) * r * radius,
+        y: v * radius,
+        z: Math.sin(a) * r * radius
+      };
+    }
+
+    function sampleRocket(i) {
+      const t = rand(i + 2);
+      const a = rand(i + 15) * Math.PI * 2;
+
+      if (t < 0.16) {
+        const y = -108 + rand(i + 40) * 44;
+        const rr = (y + 108) / 44 * 26;
+        return {
+          x: Math.cos(a) * rr,
+          y,
+          z: Math.sin(a) * rr
+        };
+      }
+
+      if (t < 0.68) {
+        const y = -64 + rand(i + 50) * 126;
+        const rr = 31 + Math.sin((y + 64) / 126 * Math.PI) * 7;
+        return {
+          x: Math.cos(a) * rr,
+          y,
+          z: Math.sin(a) * rr
+        };
+      }
+
+      if (t < 0.83) {
+        const side = rand(i + 70) > 0.5 ? 1 : -1;
+        return {
+          x: side * (28 + rand(i + 71) * 48),
+          y: 18 + rand(i + 72) * 68,
+          z: (rand(i + 73) - 0.5) * 22
+        };
+      }
+
+      return {
+        x: (rand(i + 90) - 0.5) * 42,
+        y: 66 + rand(i + 91) * 54,
+        z: (rand(i + 92) - 0.5) * 42
+      };
+    }
+
+    function sampleRobot(i) {
+      const t = rand(i + 3);
+      const a = rand(i + 21) * Math.PI * 2;
+
+      if (t < 0.48) {
+        return {
+          x: (rand(i + 31) - 0.5) * 116,
+          y: -72 + rand(i + 32) * 92,
+          z: (rand(i + 33) - 0.5) * 58
+        };
+      }
+
+      if (t < 0.65) {
+        const side = rand(i + 34) > 0.5 ? 1 : -1;
+        return {
+          x: side * (68 + rand(i + 35) * 18),
+          y: -48 + rand(i + 36) * 42,
+          z: (rand(i + 37) - 0.5) * 34
+        };
+      }
+
+      if (t < 0.78) {
+        return {
+          x: (rand(i + 41) - 0.5) * 58,
+          y: -108 + rand(i + 42) * 22,
+          z: (rand(i + 43) - 0.5) * 38
+        };
+      }
+
+      return {
+        x: Math.cos(a) * (58 + rand(i + 44) * 12),
+        y: 58 + rand(i + 45) * 42,
+        z: Math.sin(a) * (28 + rand(i + 46) * 10)
+      };
+    }
+
+    function sampleCloud(i) {
+      const lobe = Math.floor(rand(i + 4) * 5);
+      const centers = [
+        [-58, 8, 0, 42],
+        [-24, -24, 0, 54],
+        [28, -18, 0, 62],
+        [70, 8, 0, 42],
+        [8, 22, 0, 68]
+      ];
+
+      const c = centers[lobe];
+      const a = rand(i + 52) * Math.PI * 2;
+      const v = rand(i + 53) * 2 - 1;
+      const r = Math.sqrt(1 - v * v);
+      const radius = c[3] * (0.72 + rand(i + 54) * 0.28);
+
+      return {
+        x: c[0] + Math.cos(a) * r * radius,
+        y: c[1] + v * radius * 0.62,
+        z: c[2] + Math.sin(a) * r * radius * 0.7
+      };
+    }
+
+    function sampleChip(i) {
+      const t = rand(i + 5);
+
+      if (t < 0.62) {
+        return {
+          x: (rand(i + 61) - 0.5) * 126,
+          y: (rand(i + 62) - 0.5) * 92,
+          z: (rand(i + 63) - 0.5) * 20
+        };
+      }
+
+      const side = Math.floor(rand(i + 64) * 4);
+      const p = rand(i + 65) * 2 - 1;
+
+      if (side === 0) return { x: p * 84, y: -64, z: (rand(i + 66) - 0.5) * 12 };
+      if (side === 1) return { x: p * 84, y: 64, z: (rand(i + 67) - 0.5) * 12 };
+      if (side === 2) return { x: -86, y: p * 64, z: (rand(i + 68) - 0.5) * 12 };
+      return { x: 86, y: p * 64, z: (rand(i + 69) - 0.5) * 12 };
+    }
+
+    function sampleOrbit(i) {
+      const t = rand(i + 6);
+      const a = rand(i + 75) * Math.PI * 2;
+
+      if (t < 0.42) {
+        return {
+          x: Math.cos(a) * 94,
+          y: Math.sin(a) * 34,
+          z: Math.sin(a + Math.PI * 0.5) * 42
+        };
+      }
+
+      if (t < 0.74) {
+        return {
+          x: Math.cos(a) * 42,
+          y: Math.sin(a) * 86,
+          z: Math.sin(a) * 28
+        };
+      }
+
+      return sampleSphere(i + 300);
+    }
+
+    function getShapePoint(shape, i) {
+      if (shape === 0) return sampleSphere(i);
+      if (shape === 1) return sampleRocket(i);
+      if (shape === 2) return sampleRobot(i);
+      if (shape === 3) return sampleCloud(i);
+      if (shape === 4) return sampleChip(i);
+      return sampleOrbit(i);
+    }
+
+    function initMorphParticles() {
+      morphParticles = [];
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const from = getShapePoint(shapeIndex, i);
+        const to = getShapePoint(nextShapeIndex, i);
+
+        morphParticles.push({
+          from,
+          to,
+          jitter: rand(i + 100) * Math.PI * 2,
+          size: 0.7 + rand(i + 110) * 1.6
+        });
+      }
+    }
+
+    function easeInOut(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function project(p, angle) {
+      const cy = Math.cos(angle);
+      const sy = Math.sin(angle);
+      const cx = Math.cos(-0.18);
+      const sx = Math.sin(-0.18);
+
+      let x = p.x * cy - p.z * sy;
+      let z = p.x * sy + p.z * cy;
+      let y = p.y * cx - z * sx;
+      z = p.y * sx + z * cx;
+
+      const perspective = 420 / (420 + z);
+      const scale = Math.min(mw, mh) / 330;
+
+      return {
+        x: mw / 2 + x * perspective * scale,
+        y: mh / 2 + y * perspective * scale,
+        z,
+        perspective
+      };
+    }
+
+    function drawMorph(now) {
+      if (!mw || !mh) {
+        requestAnimationFrame(drawMorph);
+        return;
+      }
+
+      const elapsed = now - morphStart;
+
+      if (elapsed > SHAPE_TIME) {
+        shapeIndex = nextShapeIndex;
+        nextShapeIndex = (nextShapeIndex + 1) % shapeLabels.length;
+        morphStart = now;
+        shapeName.textContent = shapeLabels[shapeIndex];
+        initMorphParticles();
+      }
+
+      const raw = Math.min(elapsed / MORPH_TIME, 1);
+      const morphT = easeInOut(raw);
+      rotation -= 0.0065;
+
+      morphCtx.clearRect(0, 0, mw, mh);
+
+      const glow = morphCtx.createRadialGradient(mw / 2, mh / 2, 0, mw / 2, mh / 2, Math.min(mw, mh) * 0.52);
+      glow.addColorStop(0, "rgba(184,243,255,0.16)");
+      glow.addColorStop(0.45, "rgba(109,183,255,0.06)");
+      glow.addColorStop(1, "rgba(0,0,0,0)");
+      morphCtx.fillStyle = glow;
+      morphCtx.fillRect(0, 0, mw, mh);
+
+      const projected = morphParticles.map((p, i) => {
+        const pulse = Math.sin(now * 0.002 + p.jitter) * 2.2;
+        const current = {
+          x: p.from.x + (p.to.x - p.from.x) * morphT,
+          y: p.from.y + (p.to.y - p.from.y) * morphT,
+          z: p.from.z + (p.to.z - p.from.z) * morphT + pulse
+        };
+        const pp = project(current, rotation);
+        pp.size = p.size;
+        pp.index = i;
+        return pp;
+      });
+
+      for (let i = 0; i < projected.length; i += 2) {
+        const a = projected[i];
+
+        for (let j = i + 1; j < Math.min(projected.length, i + 18); j++) {
+          const b = projected[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < LINK_DISTANCE) {
+            const alpha = (1 - dist / LINK_DISTANCE) * 0.46;
+            morphCtx.strokeStyle = "rgba(230,246,255," + alpha + ")";
+            morphCtx.lineWidth = 0.7;
+            morphCtx.beginPath();
+            morphCtx.moveTo(a.x, a.y);
+            morphCtx.lineTo(b.x, b.y);
+            morphCtx.stroke();
+          }
+        }
+      }
+
+      projected.sort((a, b) => a.z - b.z);
+
+      for (const p of projected) {
+        const alpha = Math.max(0.32, Math.min(1, 0.58 + p.perspective * 0.38));
+        const radius = p.size * p.perspective;
+
+        morphCtx.fillStyle = "rgba(247,251,255," + alpha + ")";
+        morphCtx.beginPath();
+        morphCtx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+        morphCtx.fill();
+
+        morphCtx.fillStyle = "rgba(184,243,255," + (alpha * 0.24) + ")";
+        morphCtx.beginPath();
+        morphCtx.arc(p.x, p.y, radius * 2.6, 0, Math.PI * 2);
+        morphCtx.fill();
+      }
+
+      requestAnimationFrame(drawMorph);
+    }
+
+    window.addEventListener("resize", resizeMorph);
+    resizeMorph();
+    requestAnimationFrame(drawMorph);
   </script>
 </body>
 </html>
