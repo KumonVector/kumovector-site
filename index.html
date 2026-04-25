@@ -8,9 +8,11 @@
   <style>
     :root {
       --bg: #030712;
+      --bg2: #07111f;
       --white: #f7fbff;
       --muted: rgba(232, 241, 255, 0.68);
       --soft: rgba(232, 241, 255, 0.42);
+      --line: rgba(185, 217, 255, 0.16);
       --blue: #6db7ff;
       --violet: #9b7cff;
       --cyan: #b8f3ff;
@@ -46,10 +48,10 @@
       width: 100%;
       height: 100%;
       background:
-        radial-gradient(circle at 20% 10%, rgba(92, 151, 255, 0.24), transparent 28%),
-        radial-gradient(circle at 82% 35%, rgba(156, 124, 255, 0.18), transparent 26%),
-        radial-gradient(circle at 48% 78%, rgba(116, 247, 255, 0.11), transparent 30%),
-        linear-gradient(135deg, #02050d, #08101d 45%, #030712);
+        radial-gradient(circle at 18% 12%, rgba(76, 151, 255, 0.22), transparent 28%),
+        radial-gradient(circle at 84% 18%, rgba(156, 124, 255, 0.16), transparent 28%),
+        radial-gradient(circle at 45% 82%, rgba(116, 247, 255, 0.08), transparent 32%),
+        linear-gradient(135deg, #02050d, #07101d 46%, #030712);
     }
 
     .cinema {
@@ -64,8 +66,9 @@
       position: absolute;
       inset: -20%;
       background:
-        linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.035), transparent 36%),
-        radial-gradient(circle at 50% 50%, transparent 0, rgba(0,0,0,0.68) 74%);
+        radial-gradient(circle at 82% 20%, rgba(156,124,255,0.08), transparent 28%),
+        radial-gradient(circle at 18% 68%, rgba(109,183,255,0.1), transparent 30%),
+        radial-gradient(circle at 50% 50%, transparent 0, rgba(0,0,0,0.64) 76%);
       mix-blend-mode: screen;
     }
 
@@ -73,13 +76,40 @@
       position: absolute;
       inset: -30%;
       background-image:
-        linear-gradient(rgba(186, 221, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(186, 221, 255, 0.08) 1px, transparent 1px);
+        linear-gradient(rgba(186, 221, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(186, 221, 255, 0.055) 1px, transparent 1px);
       background-size: 82px 82px;
       transform: perspective(900px) rotateX(62deg) translateY(15%);
       transform-origin: center;
       opacity: 0.34;
       filter: blur(0.2px);
+    }
+
+    .ring-bg {
+      position: absolute;
+      right: -120px;
+      top: 70px;
+      width: 390px;
+      height: 390px;
+      border-radius: 999px;
+      border: 1px solid rgba(184,243,255,0.13);
+      box-shadow: inset 0 0 80px rgba(109,183,255,0.04);
+    }
+
+    .ring-bg:before,
+    .ring-bg:after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      border: 1px solid rgba(156,124,255,0.11);
+    }
+
+    .ring-bg:before {
+      inset: 48px;
+    }
+
+    .ring-bg:after {
+      inset: 112px;
     }
 
     .cloud {
@@ -89,8 +119,8 @@
       min-width: 520px;
       min-height: 520px;
       border-radius: 999px;
-      filter: blur(54px);
-      opacity: 0.22;
+      filter: blur(56px);
+      opacity: 0.2;
       background: radial-gradient(circle, rgba(107,183,255,0.72), transparent 62%);
       animation: drift 18s ease-in-out infinite alternate;
     }
@@ -105,29 +135,6 @@
       bottom: -16vh;
       background: radial-gradient(circle, rgba(156,124,255,0.58), transparent 64%);
       animation-duration: 22s;
-    }
-
-    .orb {
-      position: absolute;
-      border: 1px solid rgba(207,230,255,0.22);
-      border-radius: 999px;
-      box-shadow: 0 0 80px rgba(109,183,255,0.08);
-      opacity: 0.72;
-    }
-
-    .orb.a {
-      width: 360px;
-      height: 360px;
-      right: 8vw;
-      top: 14vh;
-    }
-
-    .orb.b {
-      width: 180px;
-      height: 180px;
-      left: 9vw;
-      bottom: 18vh;
-      border-color: rgba(184,243,255,0.18);
     }
 
     @keyframes drift {
@@ -146,42 +153,37 @@
       justify-content: space-between;
       align-items: center;
       backdrop-filter: blur(18px);
-      background: linear-gradient(to bottom, rgba(3,7,18,0.72), transparent);
+      background: linear-gradient(to bottom, rgba(3,7,18,0.78), transparent);
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 13px;
-      letter-spacing: -0.03em;
-      font-weight: 650;
+      gap: 14px;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      font-size: 22px;
     }
 
     .mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.86), rgba(109,183,255,0.38)),
-        radial-gradient(circle at 70% 35%, rgba(156,124,255,0.9), transparent 34%);
-      box-shadow: 0 0 35px rgba(109,183,255,0.28);
+      width: 38px;
+      height: 38px;
       position: relative;
     }
 
-    .mark:after {
-      content: "";
-      position: absolute;
-      inset: 9px;
-      border-top: 1px solid rgba(2,7,18,0.55);
-      border-right: 1px solid rgba(2,7,18,0.55);
-      transform: rotate(45deg);
+    .mark svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 0 16px rgba(184,243,255,0.22));
     }
 
     nav {
       display: flex;
-      gap: 26px;
-      font-size: 13px;
-      color: var(--soft);
+      gap: 28px;
+      font-size: 14px;
+      color: rgba(232,241,255,0.75);
+      align-items: center;
     }
 
     nav a {
@@ -190,6 +192,14 @@
 
     nav a:hover {
       color: var(--white);
+    }
+
+    nav .nav-cta {
+      padding: 12px 22px;
+      border-radius: 13px;
+      border: 1px solid rgba(184,243,255,0.36);
+      color: var(--white);
+      background: rgba(255,255,255,0.03);
     }
 
     main {
@@ -205,52 +215,60 @@
       scroll-snap-align: start;
       display: flex;
       align-items: center;
-      padding: 120px clamp(22px, 7vw, 110px) 72px;
+      padding: 120px clamp(22px, 4vw, 72px) 64px;
       position: relative;
     }
 
     .scene {
-      width: min(1180px, 100%);
+      width: min(1380px, 100%);
       margin: 0 auto;
       position: relative;
     }
 
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 430px;
+      gap: clamp(34px, 6vw, 76px);
+      align-items: center;
+    }
+
     .eyebrow {
       font-size: 12px;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: rgba(184,243,255,0.72);
+      color: rgba(184,243,255,0.8);
       margin-bottom: 28px;
     }
 
     h1 {
-      font-size: clamp(56px, 9vw, 124px);
-      line-height: 0.88;
+      font-size: clamp(58px, 7.4vw, 112px);
+      line-height: 0.96;
       letter-spacing: -0.075em;
-      max-width: 1060px;
-      font-weight: 720;
+      max-width: 850px;
+      font-weight: 820;
+      text-wrap: balance;
     }
 
     h2 {
-      font-size: clamp(42px, 6vw, 88px);
-      line-height: 0.92;
+      font-size: clamp(42px, 6vw, 86px);
+      line-height: 0.94;
       letter-spacing: -0.065em;
       max-width: 920px;
-      font-weight: 700;
+      font-weight: 760;
     }
 
     .lead {
-      max-width: 740px;
-      margin-top: 34px;
-      font-size: clamp(18px, 2vw, 24px);
-      line-height: 1.45;
+      max-width: 780px;
+      margin-top: 28px;
+      font-size: clamp(18px, 1.8vw, 25px);
+      line-height: 1.55;
       color: var(--muted);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
     }
 
     .actions {
       display: flex;
-      gap: 16px;
+      gap: 20px;
       align-items: center;
       flex-wrap: wrap;
       margin-top: 42px;
@@ -260,12 +278,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 52px;
+      min-height: 56px;
       padding: 0 24px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.94);
       color: #030712;
-      font-weight: 650;
+      font-weight: 740;
       font-size: 14px;
       box-shadow: 0 18px 55px rgba(109,183,255,0.18);
       transition: transform 0.35s ease, box-shadow 0.35s ease;
@@ -285,21 +303,19 @@
     }
 
     .hero-visual {
-      position: absolute;
-      right: 0;
-      bottom: -44px;
-      width: min(500px, 43vw);
-      height: 330px;
-      border: 1px solid rgba(224,238,255,0.15);
-      border-radius: 34px;
+      width: 100%;
+      height: 300px;
+      border: 1px solid rgba(224,238,255,0.18);
+      border-radius: 26px;
       background:
-        radial-gradient(circle at 50% 46%, rgba(184,243,255,0.18), transparent 25%),
-        radial-gradient(circle at 20% 20%, rgba(109,183,255,0.18), transparent 32%),
-        radial-gradient(circle at 82% 74%, rgba(156,124,255,0.2), transparent 34%),
-        linear-gradient(145deg, rgba(255,255,255,0.095), rgba(255,255,255,0.025));
+        radial-gradient(circle at 50% 46%, rgba(184,243,255,0.13), transparent 25%),
+        radial-gradient(circle at 20% 20%, rgba(109,183,255,0.13), transparent 32%),
+        radial-gradient(circle at 82% 74%, rgba(156,124,255,0.16), transparent 34%),
+        linear-gradient(145deg, rgba(255,255,255,0.065), rgba(255,255,255,0.018));
       backdrop-filter: blur(26px);
-      box-shadow: 0 35px 120px rgba(0,0,0,0.58);
+      box-shadow: 0 35px 120px rgba(0,0,0,0.46);
       overflow: hidden;
+      position: relative;
     }
 
     .hero-visual:before {
@@ -310,11 +326,11 @@
         conic-gradient(
           from 0deg,
           transparent,
-          rgba(109,183,255,0.16),
+          rgba(109,183,255,0.13),
           transparent 22%,
-          rgba(184,243,255,0.12),
+          rgba(184,243,255,0.09),
           transparent 44%,
-          rgba(156,124,255,0.16),
+          rgba(156,124,255,0.13),
           transparent 70%
         );
       animation: rotateField 14s linear infinite;
@@ -326,8 +342,8 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
-        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px);
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
       background-size: 32px 32px;
       mask-image: radial-gradient(circle at center, black, transparent 76%);
       opacity: 0.5;
@@ -341,64 +357,15 @@
       height: 100%;
     }
 
-    .data-ribbon {
-      position: absolute;
-      z-index: 2;
-      height: 2px;
-      width: 240px;
-      background: linear-gradient(90deg, transparent, rgba(184,243,255,0.85), transparent);
-      filter: drop-shadow(0 0 12px rgba(184,243,255,0.55));
-      opacity: 0.72;
-    }
-
-    .ribbon-one {
-      left: -60px;
-      top: 92px;
-      transform: rotate(18deg);
-      animation: ribbonMoveOne 5.6s ease-in-out infinite;
-    }
-
-    .ribbon-two {
-      right: -70px;
-      top: 190px;
-      transform: rotate(-16deg);
-      animation: ribbonMoveTwo 6.4s ease-in-out infinite;
-    }
-
-    .ribbon-three {
-      left: 80px;
-      bottom: 52px;
-      width: 300px;
-      background: linear-gradient(90deg, transparent, rgba(156,124,255,0.72), transparent);
-      animation: ribbonMoveThree 7.2s ease-in-out infinite;
-    }
-
-    .scan-layer {
-      position: absolute;
-      z-index: 8;
-      inset: 0;
-      background: linear-gradient(
-        120deg,
-        transparent 0%,
-        transparent 42%,
-        rgba(255,255,255,0.1) 48%,
-        rgba(184,243,255,0.12) 50%,
-        transparent 58%,
-        transparent 100%
-      );
-      transform: translateX(-120%);
-      animation: premiumScan 5.8s ease-in-out infinite;
-    }
-
     .signal {
       position: absolute;
       z-index: 9;
-      right: 24px;
-      top: 22px;
+      right: 22px;
+      top: 20px;
       display: flex;
-      gap: 6px;
+      gap: 7px;
       align-items: center;
-      color: rgba(184,243,255,0.78);
+      color: rgba(184,243,255,0.82);
       font-size: 11px;
       letter-spacing: 0.14em;
     }
@@ -416,36 +383,75 @@
       position: absolute;
       z-index: 9;
       left: 24px;
-      bottom: 22px;
+      bottom: 20px;
       font-size: 11px;
       letter-spacing: 0.18em;
       color: rgba(255,255,255,0.52);
     }
 
+    .visual-count {
+      position: absolute;
+      z-index: 9;
+      right: 24px;
+      bottom: 20px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.58);
+    }
+
+    .hero-services {
+      margin-top: 58px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid rgba(224,238,255,0.09);
+    }
+
+    .hero-service {
+      padding: 24px 28px 0 0;
+      min-height: 112px;
+      border-right: 1px solid rgba(224,238,255,0.12);
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 18px;
+    }
+
+    .hero-service:last-child {
+      border-right: none;
+    }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 13px;
+      border: 1px solid rgba(109,183,255,0.36);
+      background: rgba(109,183,255,0.055);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-icon svg {
+      width: 30px;
+      height: 30px;
+      stroke: rgba(220,242,255,0.9);
+    }
+
+    .hero-service h3 {
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-service p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
     @keyframes rotateField {
       from { transform: rotate(0deg) scale(1.05); }
       to { transform: rotate(360deg) scale(1.05); }
-    }
-
-    @keyframes ribbonMoveOne {
-      0%, 100% { transform: translateX(-20px) rotate(18deg); opacity: 0.36; }
-      50% { transform: translateX(90px) rotate(18deg); opacity: 0.9; }
-    }
-
-    @keyframes ribbonMoveTwo {
-      0%, 100% { transform: translateX(30px) rotate(-16deg); opacity: 0.32; }
-      50% { transform: translateX(-95px) rotate(-16deg); opacity: 0.88; }
-    }
-
-    @keyframes ribbonMoveThree {
-      0%, 100% { transform: translateY(10px); opacity: 0.28; }
-      50% { transform: translateY(-18px); opacity: 0.8; }
-    }
-
-    @keyframes premiumScan {
-      0%, 70% { transform: translateX(-120%); opacity: 0; }
-      78% { opacity: 1; }
-      100% { transform: translateX(120%); opacity: 0; }
     }
 
     @keyframes liveBlink {
@@ -628,6 +634,30 @@
       background: rgba(184,243,255,0.86);
     }
 
+    @media (max-width: 1120px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        width: min(430px, 100%);
+        margin-top: 12px;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+
+      .hero-services {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .hero-service:nth-child(2) {
+        border-right: none;
+      }
+    }
+
     @media (max-width: 860px) {
       header {
         padding: 22px;
@@ -646,11 +676,15 @@
       }
 
       .hero-visual {
-        position: relative;
-        width: 100%;
         height: 270px;
-        margin-top: 44px;
-        bottom: auto;
+      }
+
+      .hero-services {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-service {
+        border-right: none;
       }
 
       .progress {
@@ -696,20 +730,28 @@
     <div class="cloud two"></div>
     <div class="grid"></div>
     <div class="veil"></div>
-    <div class="orb a"></div>
-    <div class="orb b"></div>
+    <div class="ring-bg"></div>
   </div>
 
   <header>
     <a class="brand" href="#hero" aria-label="Kumo Vector home">
-      <span class="mark"></span>
+      <span class="mark">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M32 4L56 18V46L32 60L8 46V18L32 4Z" stroke="rgba(220,242,255,0.88)" stroke-width="1.6"/>
+          <path d="M32 4V60" stroke="rgba(184,243,255,0.42)" stroke-width="1.2"/>
+          <path d="M8 18L32 32L56 18" stroke="rgba(220,242,255,0.62)" stroke-width="1.2"/>
+          <path d="M8 46L32 32L56 46" stroke="rgba(220,242,255,0.38)" stroke-width="1.2"/>
+          <path d="M20 11L44 25V53" stroke="rgba(109,183,255,0.42)" stroke-width="1"/>
+          <path d="M44 11L20 25V53" stroke="rgba(156,124,255,0.36)" stroke-width="1"/>
+        </svg>
+      </span>
       <span>Kumo Vector</span>
     </a>
 
     <nav>
       <a href="#services">Services</a>
       <a href="#why">Why Kumo</a>
-      <a href="#contact">Contact</a>
+      <a href="#contact" class="nav-cta">Contact</a>
     </nav>
   </header>
 
@@ -723,29 +765,91 @@
   <main id="scroll">
     <section id="hero">
       <div class="scene">
-        <div class="eyebrow reveal active">Enterprise technology direction</div>
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow reveal active">Enterprise technology direction</div>
 
-        <h1 class="reveal active">AI-driven engineering for enterprise systems.</h1>
+            <h1 class="reveal active">AI-driven engineering for enterprise systems.</h1>
 
-        <p class="lead reveal active">
-          Kumo Vector helps companies design, build, and scale product engineering, AI enablement, data intelligence, and strategic delivery capabilities.
-        </p>
+            <p class="lead reveal active">
+              Kumo Vector helps companies design, build, and scale product engineering, AI enablement, data intelligence, and strategic delivery capabilities.
+            </p>
 
-        <div class="actions reveal active">
-          <a class="button" href="#contact">Book a Discovery Call</a>
-          <span class="quiet">Enterprise software. Applied AI. Data systems. Delivery execution.</span>
+            <div class="actions reveal active">
+              <a class="button" href="#contact">Book a Discovery Call</a>
+              <span class="quiet">Enterprise software. Applied AI. Data systems. Delivery execution.</span>
+            </div>
+          </div>
+
+          <div class="hero-visual reveal active" aria-hidden="true">
+            <canvas id="morphObject"></canvas>
+            <div class="signal"><span></span><span id="shapeName">VECTOR MODE</span></div>
+            <div class="visual-label" id="shapeType">ROCKET</div>
+            <div class="visual-count" id="shapeCount">02 / 06</div>
+          </div>
         </div>
 
-        <div class="hero-visual reveal active" aria-hidden="true">
-          <div class="data-ribbon ribbon-one"></div>
-          <div class="data-ribbon ribbon-two"></div>
-          <div class="data-ribbon ribbon-three"></div>
+        <div class="hero-services reveal active">
+          <div class="hero-service">
+            <div class="service-icon">
+              <svg viewBox="0 0 48 48" fill="none">
+                <path d="M18 12L7 24L18 36" stroke-width="2"/>
+                <path d="M30 12L41 24L30 36" stroke-width="2"/>
+                <path d="M27 8L21 40" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Product Engineering</h3>
+              <p>Scalable software, platforms, and cloud systems built for complex enterprise needs.</p>
+            </div>
+          </div>
 
-          <canvas id="morphObject"></canvas>
+          <div class="hero-service">
+            <div class="service-icon">
+              <svg viewBox="0 0 48 48" fill="none">
+                <path d="M18 8C12 10 10 16 12 22C7 26 8 36 16 39" stroke-width="2"/>
+                <path d="M30 8C36 10 38 16 36 22C41 26 40 36 32 39" stroke-width="2"/>
+                <path d="M24 8V40" stroke-width="2"/>
+                <path d="M17 20H31" stroke-width="2"/>
+                <path d="M16 30H32" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <h3>AI Enablement</h3>
+              <p>Applied AI, automation, and intelligent workflows that drive real business value.</p>
+            </div>
+          </div>
 
-          <div class="scan-layer"></div>
-          <div class="signal"><span></span><span id="shapeName">AI CORE</span></div>
-          <div class="visual-label">MORPHING VECTOR INTELLIGENCE</div>
+          <div class="hero-service">
+            <div class="service-icon">
+              <svg viewBox="0 0 48 48" fill="none">
+                <ellipse cx="24" cy="13" rx="13" ry="5" stroke-width="2"/>
+                <path d="M11 13V35C11 38 17 41 24 41C31 41 37 38 37 35V13" stroke-width="2"/>
+                <path d="M11 24C11 27 17 30 24 30C31 30 37 27 37 24" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Data Intelligence</h3>
+              <p>Data platforms, analytics, and operational intelligence for confident decisions.</p>
+            </div>
+          </div>
+
+          <div class="hero-service">
+            <div class="service-icon">
+              <svg viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="13" stroke-width="2"/>
+                <circle cx="24" cy="24" r="5" stroke-width="2"/>
+                <path d="M24 4V13" stroke-width="2"/>
+                <path d="M24 35V44" stroke-width="2"/>
+                <path d="M4 24H13" stroke-width="2"/>
+                <path d="M35 24H44" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Strategic Delivery</h3>
+              <p>From discovery to delivery, aligned teams, clear roadmaps, and shipped outcomes.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -859,61 +963,60 @@
   </main>
 
   <script>
-    const canvas = document.getElementById("field");
-    const ctx = canvas.getContext("2d");
+    const bgCanvas = document.getElementById("field");
+    const bgCtx = bgCanvas.getContext("2d");
     const scroller = document.getElementById("scroll");
     const dots = Array.from(document.querySelectorAll(".dot"));
     const sections = Array.from(document.querySelectorAll("section"));
     const reveals = Array.from(document.querySelectorAll(".reveal"));
     const grid = document.querySelector(".grid");
     const veil = document.querySelector(".veil");
-    const orbs = Array.from(document.querySelectorAll(".orb"));
     const services = Array.from(document.querySelectorAll(".service"));
 
     let w = 0;
     let h = 0;
     let dpr = 1;
-    let points = [];
+    let bgPoints = [];
     let targetScroll = 0;
     let currentScroll = 0;
     let mouse = { x: 0.5, y: 0.5 };
 
-    function resize() {
+    function resizeBg() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = window.innerWidth;
       h = window.innerHeight;
 
-      canvas.width = Math.floor(w * dpr);
-      canvas.height = Math.floor(h * dpr);
-      canvas.style.width = w + "px";
-      canvas.style.height = h + "px";
+      bgCanvas.width = Math.floor(w * dpr);
+      bgCanvas.height = Math.floor(h * dpr);
+      bgCanvas.style.width = w + "px";
+      bgCanvas.style.height = h + "px";
 
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.floor(Math.min(110, Math.max(58, w / 18)));
+      const count = Math.floor(Math.min(120, Math.max(64, w / 16)));
 
-      points = Array.from({ length: count }, (_, i) => ({
+      bgPoints = Array.from({ length: count }, (_, i) => ({
         x: Math.random() * w,
         y: Math.random() * h,
         z: Math.random() * 1 + 0.25,
-        vx: (Math.random() - 0.5) * 0.16,
-        vy: (Math.random() - 0.5) * 0.16,
-        r: Math.random() * 1.3 + 0.4,
+        vx: (Math.random() - 0.5) * 0.14,
+        vy: (Math.random() - 0.5) * 0.14,
+        r: Math.random() * 1.1 + 0.35,
         i
       }));
     }
 
-    function drawBackground() {
+    function drawBg() {
       targetScroll = scroller.scrollTop / Math.max(1, scroller.scrollHeight - h);
       currentScroll += (targetScroll - currentScroll) * 0.07;
 
-      ctx.clearRect(0, 0, w, h);
+      bgCtx.clearRect(0, 0, w, h);
 
-      const driftX = (mouse.x - 0.5) * 34;
-      const driftY = (mouse.y - 0.5) * 34;
-      const scrollForce = currentScroll * h * 0.38;
+      const driftX = (mouse.x - 0.5) * 28;
+      const driftY = (mouse.y - 0.5) * 28;
+      const scrollForce = currentScroll * h * 0.3;
 
-      const grad = ctx.createRadialGradient(
+      const grad = bgCtx.createRadialGradient(
         w * (0.45 + currentScroll * 0.22),
         h * 0.35,
         0,
@@ -922,14 +1025,14 @@
         Math.max(w, h) * 0.8
       );
 
-      grad.addColorStop(0, "rgba(109,183,255,0.12)");
-      grad.addColorStop(0.35, "rgba(156,124,255,0.055)");
+      grad.addColorStop(0, "rgba(109,183,255,0.1)");
+      grad.addColorStop(0.38, "rgba(156,124,255,0.045)");
       grad.addColorStop(1, "rgba(3,7,18,0)");
 
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, w, h);
+      bgCtx.fillStyle = grad;
+      bgCtx.fillRect(0, 0, w, h);
 
-      for (const p of points) {
+      for (const p of bgPoints) {
         p.x += p.vx * p.z + Math.sin(Date.now() * 0.00018 + p.i) * 0.018;
         p.y += p.vy * p.z + Math.cos(Date.now() * 0.00015 + p.i) * 0.018;
 
@@ -939,42 +1042,42 @@
         if (p.y > h + 60) p.y = -60;
       }
 
-      for (let i = 0; i < points.length; i++) {
-        const a = points[i];
+      for (let i = 0; i < bgPoints.length; i++) {
+        const a = bgPoints[i];
         const ax = a.x + driftX * a.z;
         const ay = a.y + driftY * a.z - scrollForce * (a.z - 0.45);
 
-        for (let j = i + 1; j < points.length; j++) {
-          const b = points[j];
+        for (let j = i + 1; j < bgPoints.length; j++) {
+          const b = bgPoints[j];
           const bx = b.x + driftX * b.z;
           const by = b.y + driftY * b.z - scrollForce * (b.z - 0.45);
           const dx = ax - bx;
           const dy = ay - by;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 138) {
-            const alpha = (1 - dist / 138) * 0.145;
-            ctx.strokeStyle = "rgba(190,225,255," + alpha + ")";
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(ax, ay);
-            ctx.lineTo(bx, by);
-            ctx.stroke();
+          if (dist < 142) {
+            const alpha = (1 - dist / 142) * 0.12;
+            bgCtx.strokeStyle = "rgba(190,225,255," + alpha + ")";
+            bgCtx.lineWidth = 1;
+            bgCtx.beginPath();
+            bgCtx.moveTo(ax, ay);
+            bgCtx.lineTo(bx, by);
+            bgCtx.stroke();
           }
         }
       }
 
-      for (const p of points) {
+      for (const p of bgPoints) {
         const x = p.x + driftX * p.z;
         const y = p.y + driftY * p.z - scrollForce * (p.z - 0.45);
 
-        ctx.fillStyle = "rgba(220,242,255," + (0.24 + p.z * 0.14) + ")";
-        ctx.beginPath();
-        ctx.arc(x, y, p.r * p.z, 0, Math.PI * 2);
-        ctx.fill();
+        bgCtx.fillStyle = "rgba(220,242,255," + (0.2 + p.z * 0.12) + ")";
+        bgCtx.beginPath();
+        bgCtx.arc(x, y, p.r * p.z, 0, Math.PI * 2);
+        bgCtx.fill();
       }
 
-      requestAnimationFrame(drawBackground);
+      requestAnimationFrame(drawBg);
     }
 
     function updateScene() {
@@ -985,12 +1088,6 @@
 
       veil.style.transform =
         "translate3d(" + ((mouse.x - 0.5) * 26) + "px," + ((mouse.y - 0.5) * 20) + "px,0) scale(" + (1 + progress * 0.05) + ")";
-
-      orbs.forEach((orb, i) => {
-        const speed = i === 0 ? 52 : -36;
-        orb.style.transform =
-          "translate3d(" + ((mouse.x - 0.5) * speed) + "px," + ((mouse.y - 0.5) * speed * 0.6 + progress * speed) + "px,0)";
-      });
 
       sections.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
@@ -1017,7 +1114,7 @@
       });
     });
 
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", resizeBg);
 
     window.addEventListener("pointermove", (e) => {
       mouse.x = e.clientX / Math.max(1, w);
@@ -1026,13 +1123,15 @@
 
     scroller.addEventListener("scroll", updateScene, { passive: true });
 
-    resize();
-    drawBackground();
+    resizeBg();
+    drawBg();
     updateScene();
 
     const morphCanvas = document.getElementById("morphObject");
     const morphCtx = morphCanvas.getContext("2d");
     const shapeName = document.getElementById("shapeName");
+    const shapeType = document.getElementById("shapeType");
+    const shapeCount = document.getElementById("shapeCount");
 
     let mw = 0;
     let mh = 0;
@@ -1040,14 +1139,15 @@
     let shapeCloud = [];
     let rotation = 0;
 
-    const PARTICLE_COUNT = 1100;
-    const LINK_DISTANCE = 19;
-    const SEGMENT_DURATION = 2300;
+    const PARTICLE_COUNT = 920;
+    const LINK_DISTANCE = 20;
+    const HOLD_DURATION = 1850;
+    const MORPH_DURATION = 950;
+    const SEGMENT_DURATION = HOLD_DURATION + MORPH_DURATION;
 
     const shapeLabels = [
       "AI CORE",
       "ROCKET",
-      "ROBOT BUST",
       "CLOUD NODE",
       "NEURAL CHIP",
       "DATA ORBIT",
@@ -1086,7 +1186,7 @@
       const a = rand(i + 1) * Math.PI * 2;
       const v = -0.92 + band / 17 * 1.84 + (rand(i + 9) - 0.5) * 0.035;
       const r = Math.sqrt(Math.max(0, 1 - v * v));
-      const radius = 76;
+      const radius = 74;
 
       return {
         x: Math.cos(a) * r * radius,
@@ -1100,22 +1200,21 @@
       const a = rand(i + 15) * Math.PI * 2;
 
       if (t < 0.28) {
-        const y = -120 + rand(i + 40) * 56;
-        const rr = Math.max(3, (y + 120) / 56 * 28);
-        const surface = rand(i + 41) > 0.5 ? 1 : 0.82;
-
+        const p = rand(i + 40);
+        const y = -112 + p * 48;
+        const rr = Math.max(2, p * 26);
         return {
-          x: Math.cos(a) * rr * surface,
+          x: Math.cos(a) * rr,
           y,
-          z: Math.sin(a) * rr * surface
+          z: Math.sin(a) * rr
         };
       }
 
-      if (t < 0.68) {
-        const y = -64 + rand(i + 50) * 132;
-        const rr = 30 + Math.sin((y + 64) / 132 * Math.PI) * 5;
-        const stripe = Math.floor(rand(i + 51) * 12) / 12 * Math.PI * 2;
-        const angle = rand(i + 52) > 0.5 ? a : stripe + (rand(i + 53) - 0.5) * 0.06;
+      if (t < 0.62) {
+        const y = -62 + rand(i + 50) * 126;
+        const rr = 29 + Math.sin((y + 62) / 126 * Math.PI) * 4;
+        const stripe = Math.floor(rand(i + 51) * 16) / 16 * Math.PI * 2;
+        const angle = rand(i + 52) > 0.42 ? stripe + (rand(i + 53) - 0.5) * 0.05 : a;
 
         return {
           x: Math.cos(angle) * rr,
@@ -1124,85 +1223,37 @@
         };
       }
 
-      if (t < 0.85) {
+      if (t < 0.82) {
         const side = rand(i + 70) > 0.5 ? 1 : -1;
         const p = rand(i + 71);
-        const upper = { x: side * 27, y: 10, z: 0 };
-        const lower = { x: side * 78, y: 82, z: 0 };
-        const inner = { x: side * 30, y: 82, z: 0 };
+        const upper = { x: side * 27, y: 8, z: 0 };
+        const lower = { x: side * 78, y: 80, z: 0 };
+        const inner = { x: side * 30, y: 80, z: 0 };
         const edge = rand(i + 72);
 
-        if (edge < 0.33) return linePoint(upper, lower, p, 4, i + 73);
-        if (edge < 0.66) return linePoint(lower, inner, p, 4, i + 74);
-        return linePoint(inner, upper, p, 4, i + 75);
+        if (edge < 0.34) return linePoint(upper, lower, p, 3, i + 73);
+        if (edge < 0.67) return linePoint(lower, inner, p, 3, i + 74);
+        return linePoint(inner, upper, p, 3, i + 75);
       }
 
       const flameA = rand(i + 90) * Math.PI * 2;
-      const flameR = 8 + rand(i + 91) * 22;
+      const flameR = 8 + rand(i + 91) * 19;
 
       return {
         x: Math.cos(flameA) * flameR,
-        y: 72 + rand(i + 92) * 50,
+        y: 70 + rand(i + 92) * 46,
         z: Math.sin(flameA) * flameR
-      };
-    }
-
-    function sampleRobot(i) {
-      const t = rand(i + 3);
-      const a = rand(i + 21) * Math.PI * 2;
-
-      if (t < 0.36) {
-        const edge = Math.floor(rand(i + 31) * 4);
-        const px = rand(i + 32) * 2 - 1;
-        const py = rand(i + 33) * 2 - 1;
-
-        if (edge === 0) return { x: px * 58, y: -78, z: (rand(i + 34) - 0.5) * 58 };
-        if (edge === 1) return { x: px * 58, y: 14, z: (rand(i + 35) - 0.5) * 58 };
-        if (edge === 2) return { x: -58, y: -78 + (py + 1) * 46, z: (rand(i + 36) - 0.5) * 58 };
-        return { x: 58, y: -78 + (py + 1) * 46, z: (rand(i + 37) - 0.5) * 58 };
-      }
-
-      if (t < 0.52) {
-        const side = rand(i + 38) > 0.5 ? 1 : -1;
-        return {
-          x: side * (70 + rand(i + 39) * 18),
-          y: -54 + rand(i + 40) * 45,
-          z: (rand(i + 41) - 0.5) * 30
-        };
-      }
-
-      if (t < 0.63) {
-        return {
-          x: (rand(i + 42) - 0.5) * 62,
-          y: -114 + rand(i + 43) * 22,
-          z: (rand(i + 44) - 0.5) * 38
-        };
-      }
-
-      if (t < 0.76) {
-        const side = rand(i + 45) > 0.5 ? 1 : -1;
-        return {
-          x: side * (22 + rand(i + 46) * 18),
-          y: -46 + rand(i + 47) * 18,
-          z: -36 + rand(i + 48) * 9
-        };
-      }
-
-      return {
-        x: Math.cos(a) * (58 + rand(i + 49) * 12),
-        y: 58 + rand(i + 50) * 42,
-        z: Math.sin(a) * (28 + rand(i + 51) * 10)
       };
     }
 
     function sampleCloud(i) {
       const lobe = Math.floor(rand(i + 4) * 5);
       const centers = [
-        [-60, 8, 0, 42],
-        [-26, -24, 0, 54],
-        [28, -18, 0, 62],
-        [72, 8, 0, 42],
-        [8, 22, 0, 68]
+        [-60, 8, 0, 40],
+        [-26, -24, 0, 52],
+        [28, -18, 0, 60],
+        [70, 8, 0, 40],
+        [8, 22, 0, 64]
       ];
 
       const c = centers[lobe];
@@ -1213,8 +1264,8 @@
 
       return {
         x: c[0] + Math.cos(a) * r * radius,
-        y: c[1] + v * radius * 0.62,
-        z: c[2] + Math.sin(a) * r * radius * 0.7
+        y: c[1] + v * radius * 0.58,
+        z: c[2] + Math.sin(a) * r * radius * 0.65
       };
     }
 
@@ -1225,26 +1276,26 @@
         const edge = Math.floor(rand(i + 61) * 4);
         const p = rand(i + 62) * 2 - 1;
 
-        if (edge === 0) return { x: p * 88, y: -66, z: (rand(i + 63) - 0.5) * 12 };
-        if (edge === 1) return { x: p * 88, y: 66, z: (rand(i + 64) - 0.5) * 12 };
-        if (edge === 2) return { x: -88, y: p * 66, z: (rand(i + 65) - 0.5) * 12 };
-        return { x: 88, y: p * 66, z: (rand(i + 66) - 0.5) * 12 };
+        if (edge === 0) return { x: p * 84, y: -62, z: (rand(i + 63) - 0.5) * 10 };
+        if (edge === 1) return { x: p * 84, y: 62, z: (rand(i + 64) - 0.5) * 10 };
+        if (edge === 2) return { x: -84, y: p * 62, z: (rand(i + 65) - 0.5) * 10 };
+        return { x: 84, y: p * 62, z: (rand(i + 66) - 0.5) * 10 };
       }
 
-      if (t < 0.74) {
+      if (t < 0.76) {
         const side = Math.floor(rand(i + 67) * 4);
         const p = rand(i + 68) * 2 - 1;
 
-        if (side === 0) return { x: p * 102, y: -78, z: 0 };
-        if (side === 1) return { x: p * 102, y: 78, z: 0 };
-        if (side === 2) return { x: -102, y: p * 78, z: 0 };
-        return { x: 102, y: p * 78, z: 0 };
+        if (side === 0) return { x: p * 98, y: -74, z: 0 };
+        if (side === 1) return { x: p * 98, y: 74, z: 0 };
+        if (side === 2) return { x: -98, y: p * 74, z: 0 };
+        return { x: 98, y: p * 74, z: 0 };
       }
 
       return {
-        x: (rand(i + 170) - 0.5) * 70,
-        y: (rand(i + 171) - 0.5) * 46,
-        z: 18 + (rand(i + 172) - 0.5) * 18
+        x: (rand(i + 170) - 0.5) * 66,
+        y: (rand(i + 171) - 0.5) * 42,
+        z: 16 + (rand(i + 172) - 0.5) * 16
       };
     }
 
@@ -1252,19 +1303,19 @@
       const t = rand(i + 6);
       const a = rand(i + 75) * Math.PI * 2;
 
-      if (t < 0.45) {
+      if (t < 0.48) {
         return {
-          x: Math.cos(a) * 98,
-          y: Math.sin(a) * 34,
-          z: Math.sin(a + Math.PI * 0.5) * 42
+          x: Math.cos(a) * 94,
+          y: Math.sin(a) * 32,
+          z: Math.sin(a + Math.PI * 0.5) * 40
         };
       }
 
-      if (t < 0.78) {
+      if (t < 0.82) {
         return {
-          x: Math.cos(a) * 42,
-          y: Math.sin(a) * 90,
-          z: Math.sin(a) * 30
+          x: Math.cos(a) * 40,
+          y: Math.sin(a) * 86,
+          z: Math.sin(a) * 28
         };
       }
 
@@ -1273,38 +1324,37 @@
 
     function sampleStar(i) {
       const t = rand(i + 7);
-      const points = [];
-      const outer = 98;
+      const vertices = [];
+      const outer = 96;
       const inner = 42;
 
       for (let k = 0; k < 10; k++) {
         const r = k % 2 === 0 ? outer : inner;
         const a = -Math.PI / 2 + k * Math.PI / 5;
-        points.push({
+        vertices.push({
           x: Math.cos(a) * r,
           y: Math.sin(a) * r,
-          z: Math.sin(k * 1.7) * 18
+          z: Math.sin(k * 1.7) * 16
         });
       }
 
-      if (t < 0.72) {
+      if (t < 0.76) {
         const edge = Math.floor(rand(i + 80) * 10);
         const p = rand(i + 81);
-        return linePoint(points[edge], points[(edge + 1) % 10], p, 3.5, i + 82);
+        return linePoint(vertices[edge], vertices[(edge + 1) % 10], p, 3, i + 82);
       }
 
       const spoke = Math.floor(rand(i + 83) * 10);
       const p = rand(i + 84);
-      return linePoint({ x: 0, y: 0, z: 0 }, points[spoke], p, 3.5, i + 85);
+      return linePoint({ x: 0, y: 0, z: 0 }, vertices[spoke], p, 3, i + 85);
     }
 
     function getShapePoint(shape, i) {
       if (shape === 0) return sampleSphere(i);
       if (shape === 1) return sampleRocket(i);
-      if (shape === 2) return sampleRobot(i);
-      if (shape === 3) return sampleCloud(i);
-      if (shape === 4) return sampleChip(i);
-      if (shape === 5) return sampleOrbit(i);
+      if (shape === 2) return sampleCloud(i);
+      if (shape === 3) return sampleChip(i);
+      if (shape === 4) return sampleOrbit(i);
       return sampleStar(i);
     }
 
@@ -1333,7 +1383,12 @@
       const segmentTime = local - segment * SEGMENT_DURATION;
       const from = segment;
       const to = (segment + 1) % shapeLabels.length;
-      const t = smoother(segmentTime / SEGMENT_DURATION);
+
+      let t = 0;
+
+      if (segmentTime > HOLD_DURATION) {
+        t = smoother((segmentTime - HOLD_DURATION) / MORPH_DURATION);
+      }
 
       return { from, to, t };
     }
@@ -1341,8 +1396,8 @@
     function project(p, angle) {
       const cy = Math.cos(angle);
       const sy = Math.sin(angle);
-      const cx = Math.cos(-0.18);
-      const sx = Math.sin(-0.18);
+      const cx = Math.cos(-0.15);
+      const sx = Math.sin(-0.15);
 
       let x = p.x * cy - p.z * sy;
       let z = p.x * sy + p.z * cy;
@@ -1367,15 +1422,17 @@
       }
 
       const state = getCycleState(now);
-      rotation -= 0.0062;
+      rotation -= 0.006;
 
-      shapeName.textContent = shapeLabels[state.from];
+      shapeName.textContent = "VECTOR MODE";
+      shapeType.textContent = shapeLabels[state.from];
+      shapeCount.textContent = String(state.from + 1).padStart(2, "0") + " / " + String(shapeLabels.length).padStart(2, "0");
 
       morphCtx.clearRect(0, 0, mw, mh);
 
       const glow = morphCtx.createRadialGradient(mw / 2, mh / 2, 0, mw / 2, mh / 2, Math.min(mw, mh) * 0.55);
-      glow.addColorStop(0, "rgba(184,243,255,0.15)");
-      glow.addColorStop(0.45, "rgba(109,183,255,0.055)");
+      glow.addColorStop(0, "rgba(184,243,255,0.13)");
+      glow.addColorStop(0.45, "rgba(109,183,255,0.05)");
       glow.addColorStop(1, "rgba(0,0,0,0)");
 
       morphCtx.fillStyle = glow;
@@ -1386,7 +1443,7 @@
       for (let i = 0; i < PARTICLE_COUNT; i++) {
         const a = shapeCloud[state.from][i];
         const b = shapeCloud[state.to][i];
-        const pulse = Math.sin(now * 0.0015 + i * 0.19) * 0.85;
+        const pulse = Math.sin(now * 0.0013 + i * 0.19) * 0.7;
 
         const current = {
           x: a.x + (b.x - a.x) * state.t,
@@ -1395,7 +1452,7 @@
         };
 
         const pp = project(current, rotation);
-        pp.size = 0.34 + rand(i + 110) * 0.88;
+        pp.size = 0.32 + rand(i + 110) * 0.78;
         pp.index = i;
         projected.push(pp);
       }
@@ -1414,10 +1471,10 @@
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < LINK_DISTANCE) {
-            const alpha = (1 - dist / LINK_DISTANCE) * 0.28;
+            const alpha = (1 - dist / LINK_DISTANCE) * 0.25;
 
             morphCtx.strokeStyle = "rgba(230,246,255," + alpha + ")";
-            morphCtx.lineWidth = 0.42;
+            morphCtx.lineWidth = 0.4;
             morphCtx.beginPath();
             morphCtx.moveTo(a.x, a.y);
             morphCtx.lineTo(b.x, b.y);
@@ -1429,7 +1486,7 @@
       projected.sort((a, b) => a.z - b.z);
 
       for (const p of projected) {
-        const alpha = Math.max(0.25, Math.min(0.92, 0.48 + p.perspective * 0.38));
+        const alpha = Math.max(0.24, Math.min(0.9, 0.46 + p.perspective * 0.36));
         const radius = p.size * p.perspective;
 
         morphCtx.fillStyle = "rgba(247,251,255," + alpha + ")";
@@ -1437,9 +1494,9 @@
         morphCtx.arc(p.x, p.y, radius, 0, Math.PI * 2);
         morphCtx.fill();
 
-        morphCtx.fillStyle = "rgba(184,243,255," + (alpha * 0.16) + ")";
+        morphCtx.fillStyle = "rgba(184,243,255," + (alpha * 0.14) + ")";
         morphCtx.beginPath();
-        morphCtx.arc(p.x, p.y, radius * 2.1, 0, Math.PI * 2);
+        morphCtx.arc(p.x, p.y, radius * 2, 0, Math.PI * 2);
         morphCtx.fill();
       }
 
