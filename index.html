@@ -30,19 +30,19 @@
     }
 
     body {
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: var(--bg);
-        color: var(--white);
-        overflow-x: hidden;
-      }
-      
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
     html,
     body,
     main {
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
-    
+
     html::-webkit-scrollbar,
     body::-webkit-scrollbar,
     main::-webkit-scrollbar {
@@ -307,6 +307,12 @@
     .button:hover {
       transform: translateY(-2px);
       box-shadow: 0 24px 80px rgba(109,183,255,0.26);
+    }
+
+    .button:disabled {
+      opacity: 0.58;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .quiet {
@@ -599,6 +605,16 @@
       color: rgba(232,241,255,0.48);
       font-size: 13px;
       line-height: 1.55;
+    }
+
+    .form-status {
+      display: none;
+      font-size: 14px;
+      line-height: 1.55;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(224,238,255,0.12);
+      background: rgba(255,255,255,0.045);
     }
 
     .scene-word {
@@ -928,10 +944,10 @@
         <div class="contact-card reveal">
           <div class="eyebrow">Contact</div>
 
-          <h2>Let’s build what moves next.</h2>
+          <h2>Let's build what moves next.</h2>
 
           <p class="lead" style="margin-top:20px; max-width:620px;">
-            Share your work email and a bit of context. We’ll reach out to schedule a discovery call.
+            Share your work email and a bit of context. We will reach out to schedule a discovery call.
           </p>
 
           <form
@@ -947,11 +963,13 @@
               tabindex="-1"
               autocomplete="off"
             />
+
             <input
               class="field"
               type="email"
               name="email"
               placeholder="Your work email"
+              autocomplete="email"
               required
             />
 
@@ -960,13 +978,11 @@
               name="message"
               placeholder="Tell us briefly about your challenge. Optional."
             ></textarea>
-            
-            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
-            <p id="formStatus" class="form-note" style="display:none;"></p>
-            
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+
             <div class="actions" style="margin-top:6px;">
-              <button type="submit" class="button">
+              <button type="submit" class="button" id="submitButton">
                 Request a Discovery Call
               </button>
 
@@ -1227,11 +1243,7 @@
         const p = rand(i + 40);
         const y = -112 + p * 48;
         const rr = Math.max(2, p * 26);
-        return {
-          x: Math.cos(a) * rr,
-          y,
-          z: Math.sin(a) * rr
-        };
+        return { x: Math.cos(a) * rr, y, z: Math.sin(a) * rr };
       }
 
       if (t < 0.62) {
@@ -1240,11 +1252,7 @@
         const stripe = Math.floor(rand(i + 51) * 16) / 16 * Math.PI * 2;
         const angle = rand(i + 52) > 0.42 ? stripe + (rand(i + 53) - 0.5) * 0.05 : a;
 
-        return {
-          x: Math.cos(angle) * rr,
-          y,
-          z: Math.sin(angle) * rr
-        };
+        return { x: Math.cos(angle) * rr, y, z: Math.sin(angle) * rr };
       }
 
       if (t < 0.82) {
@@ -1327,21 +1335,8 @@
       const t = rand(i + 6);
       const a = rand(i + 75) * Math.PI * 2;
 
-      if (t < 0.48) {
-        return {
-          x: Math.cos(a) * 94,
-          y: Math.sin(a) * 32,
-          z: Math.sin(a + Math.PI * 0.5) * 40
-        };
-      }
-
-      if (t < 0.82) {
-        return {
-          x: Math.cos(a) * 40,
-          y: Math.sin(a) * 86,
-          z: Math.sin(a) * 28
-        };
-      }
+      if (t < 0.48) return { x: Math.cos(a) * 94, y: Math.sin(a) * 32, z: Math.sin(a + Math.PI * 0.5) * 40 };
+      if (t < 0.82) return { x: Math.cos(a) * 40, y: Math.sin(a) * 86, z: Math.sin(a) * 28 };
 
       return sampleSphere(i + 300);
     }
@@ -1486,7 +1481,6 @@
 
         for (let k = 1; k <= 8; k++) {
           const j = i + k;
-
           if (j >= projected.length) break;
 
           const b = projected[j];
@@ -1534,70 +1528,69 @@
 
     const contactForm = document.getElementById("contactForm");
     const formStatus = document.getElementById("formStatus");
+    const submitButton = document.getElementById("submitButton");
     let lastSubmitTime = 0;
+
+    function showFormStatus(message, color) {
+      formStatus.style.display = "block";
+      formStatus.textContent = message;
+      formStatus.style.color = color;
+    }
 
     if (contactForm) {
       contactForm.addEventListener("submit", async function (e) {
         e.preventDefault();
+
         const now = Date.now();
-    
-    if (now - lastSubmitTime < 15000) {
-      formStatus.style.display = "block";
-      formStatus.textContent = "Please wait a few seconds before submitting again.";
-      formStatus.style.color = "rgba(255,190,190,0.9)";
-      return;
-    }
-    
-    lastSubmitTime = now;
-    
-    const honey = contactForm.querySelector('input[name="_gotcha"]')?.value;
-    
-    if (honey) {
-      return;
-    }
-        
-    const email = contactForm.querySelector('input[name="email"]').value.trim();
-    const message = contactForm.querySelector('textarea[name="message"]').value.trim();
-    const honey = contactForm.querySelector('input[name="_gotcha"]').value;
 
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (now - lastSubmitTime < 15000) {
+          showFormStatus("Please wait a few seconds before submitting again.", "rgba(255,190,190,0.9)");
+          return;
+        }
 
-    if (honey) return;
+        const honey = contactForm.querySelector('input[name="_gotcha"]').value;
 
-    if (!emailValid) {
-      formStatus.style.display = "block";
-      formStatus.textContent = "Please enter a valid work email.";
-      formStatus.style.color = "rgba(255,190,190,0.9)";
-      return;
-    }
+        if (honey) {
+          return;
+        }
 
-    formStatus.style.display = "block";
-    formStatus.textContent = "Sending...";
-    formStatus.style.color = "rgba(232,241,255,0.58)";
+        const email = contactForm.querySelector('input[name="email"]').value.trim();
+        const message = contactForm.querySelector('textarea[name="message"]').value.trim();
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-    try {
-      const response = await fetch(contactForm.action, {
-        method: "POST",
-        body: new FormData(contactForm),
-        headers: {
-          Accept: "application/json"
+        if (!emailValid) {
+          showFormStatus("Please enter a valid work email.", "rgba(255,190,190,0.9)");
+          return;
+        }
+
+        lastSubmitTime = now;
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+        showFormStatus("Sending...", "rgba(232,241,255,0.62)");
+
+        try {
+          const response = await fetch(contactForm.action, {
+            method: "POST",
+            body: new FormData(contactForm),
+            headers: {
+              Accept: "application/json"
+            }
+          });
+
+          if (response.ok) {
+            contactForm.reset();
+            showFormStatus("Thanks. We will reach out shortly to schedule a discovery call.", "rgba(184,243,255,0.9)");
+          } else {
+            showFormStatus("Something went wrong. Please try again.", "rgba(255,190,190,0.9)");
+          }
+        } catch (error) {
+          showFormStatus("Something went wrong. Please try again.", "rgba(255,190,190,0.9)");
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "Request a Discovery Call";
         }
       });
-
-      if (response.ok) {
-        contactForm.reset();
-        formStatus.textContent = "Thanks. We’ll reach out shortly to schedule a discovery call.";
-        formStatus.style.color = "rgba(184,243,255,0.9)";
-      } else {
-        formStatus.textContent = "Something went wrong. Please try again.";
-        formStatus.style.color = "rgba(255,190,190,0.9)";
-      }
-    } catch (error) {
-      formStatus.textContent = "Something went wrong. Please try again.";
-      formStatus.style.color = "rgba(255,190,190,0.9)";
     }
-  });
-}
   </script>
 </body>
 </html>
