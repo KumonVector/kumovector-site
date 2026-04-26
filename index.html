@@ -941,6 +941,13 @@
             method="POST"
           >
             <input
+              type="text"
+              name="_gotcha"
+              style="display:none"
+              tabindex="-1"
+              autocomplete="off"
+            />
+            <input
               class="field"
               type="email"
               name="email"
@@ -1526,12 +1533,29 @@
     requestAnimationFrame(drawMorph);
 
     const contactForm = document.getElementById("contactForm");
-const formStatus = document.getElementById("formStatus");
+    const formStatus = document.getElementById("formStatus");
+    let lastSubmitTime = 0;
 
-if (contactForm) {
-  contactForm.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
+    if (contactForm) {
+      contactForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const now = Date.now();
+    
+    if (now - lastSubmitTime < 15000) {
+      formStatus.style.display = "block";
+      formStatus.textContent = "Please wait a few seconds before submitting again.";
+      formStatus.style.color = "rgba(255,190,190,0.9)";
+      return;
+    }
+    
+    lastSubmitTime = now;
+    
+    const honey = contactForm.querySelector('input[name="_gotcha"]')?.value;
+    
+    if (honey) {
+      return;
+    }
+        
     const email = contactForm.querySelector('input[name="email"]').value.trim();
     const message = contactForm.querySelector('textarea[name="message"]').value.trim();
     const honey = contactForm.querySelector('input[name="_gotcha"]').value;
